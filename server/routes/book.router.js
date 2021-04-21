@@ -38,6 +38,19 @@ router.post('/',  (req, res) => {
 // Updates a book to show that it has been read
 // Request must include a parameter indicating what book to update - the id
 // Request body must include the content to update - the status
+router.put('/books/isRead:id', (req, res) => {
+  let bookId = req.params.id;
+  let read = req.body.read;
+  let sqlText = '';
+  if (read === true) {
+    sqlText = `UPDATE "books" SET "isRead"=true WHERE "id"=$1`;
+  }
+  else {
+    res.sendStatus(500);
+    return;
+  }
+})
+
 
 
 // TODO - DELETE 
