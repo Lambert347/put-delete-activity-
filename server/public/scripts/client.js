@@ -58,7 +58,27 @@ function renderBooks(books) {
       <tr>
         <td>${book.title}</td>
         <td>${book.author}</td>
+        <td>${book.isRead}</td>
+        <td>
+          <button class="readBook" data-id="${books[i].id}">Read Book</button>
+        <td>
       </tr>
     `);
   }
 }
+
+function bookIsRead(bookId, isRead){
+  $.ajax({
+    method: 'PUT',
+    url: `/awesome_reads/books/isRead/${bookId}`,
+    data: {
+      read: isRead
+    }
+  })
+    .then (function(response){
+      refreshBooks();
+    })
+    .catch(function(error){
+      alert('Error from trying to change is read', error);
+    })
+  }

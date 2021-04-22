@@ -42,14 +42,19 @@ router.put('/books/isRead:id', (req, res) => {
   let bookId = req.params.id;
   let read = req.body.read;
   let sqlText = '';
-  if (read === true) {
+  if (read === 'true') {
     sqlText = `UPDATE "books" SET "isRead"=true WHERE "id"=$1`;
   }
   else {
     res.sendStatus(500);
     return;
   }
-})
+  pool.query(sqlText, [bookId]).then((resDB) =>{
+    res.sendStatus(200);
+  }).catch((error) => {
+    res.sendStatus(500);
+  });
+});
 
 
 
