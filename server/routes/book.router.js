@@ -38,12 +38,12 @@ router.post('/',  (req, res) => {
 // Updates a book to show that it has been read
 // Request must include a parameter indicating what book to update - the id
 // Request body must include the content to update - the status
-router.put('/books/isRead:id', (req, res) => {
+router.put('/awesome_reads/books/isRead:id', (req, res) => {
   let bookId = req.params.id;
-  let read = req.body.read;
+  let read = req.body.isRead
   let sqlText = '';
   if (read === 'true') {
-    sqlText = `UPDATE "books" SET "isRead"=true WHERE "id"=$1`;
+    sqlText = `UPDATE "books" SET "isRead"=true WHERE "id"=$1;`;
   }
   else {
     res.sendStatus(500);
@@ -55,6 +55,22 @@ router.put('/books/isRead:id', (req, res) => {
     res.sendStatus(500);
   });
 });
+
+router.delete('/books/:id', (req, res) => {
+  let reqId = req.params.id;
+  console.log('Delete request id', reqId);
+
+  let sqlText = 'DELETE FROM "books" WHERE "id=$1;';
+  pool.query(sqlText, [reqId])
+      .then((result) => {
+        console.log('Book deleted');
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.log(`error making database query ${sqlText}`, error)
+        res.sendStatus(500);
+      })
+})
 
 
 

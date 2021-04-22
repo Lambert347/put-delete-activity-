@@ -4,7 +4,7 @@ const booksRouter = require('./routes/book.router.js');
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(bodyParser.json());
 app.use('/books', booksRouter);
 
 // Serve back static files by default
