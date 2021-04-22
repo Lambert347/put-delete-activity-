@@ -80,9 +80,9 @@ function isReadHandler(){
 function bookIsRead(bookId, isRead){
   $.ajax({
     method: 'PUT',
-    url: '/books',
+    url: `/books/isRead/${bookId}`,
     data: {
-      read: isRead
+      boolean: isRead
     }
   })
     .then (function(response){
@@ -90,7 +90,7 @@ function bookIsRead(bookId, isRead){
       console.log('edit book');
     })
     .catch(function(error){
-      alert('Error from trying to change', error);
+      alert('Error from trying to change read status', error);
     })
 }
 
@@ -101,7 +101,7 @@ function deleteHandler(){
 function deleteBook(bookId){
   $.ajax({
     method: 'DELETE',
-    url: `/awesome_reads/books/${bookId}`,
+    url: `/books/${bookId}`,
   })
   .then (function (response) {
     refreshBooks();
